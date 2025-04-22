@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" >
+  </head>
+<body>
+    
+  <!-- <div class="input-group">
+    <label>Start Point:</label>
+    <input type="text" id="startPoint" placeholder="Enter start location" required />
+  </div> -->
+
+  <div id="destinations">
+    <div class="input-group">
+      <label>Destination 1:</label>
+      <input type="text" class="destination" placeholder="enter destination" />
+    </div>
+  </div>
+
+  <button onclick="addDestination()">add  destination</button>
+  <br />
+  <button onclick="submitLocations()">Submit</button>
+
+  <button onclick="fetchRoute()">Mark Route</button>
+
+  <div id="map"></div>
+    
+  <script src="index.js"></script>
+  <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzmueJmO4fcMkY96rEecxav36ZzStP61Q&callback=initMap">
+  </script>
+</body>
+</html>

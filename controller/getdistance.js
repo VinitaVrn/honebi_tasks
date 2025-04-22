@@ -1,3 +1,6 @@
+import { configDotenv } from "dotenv";
+configDotenv();
+import axios from "axios";
 export const findDistance=(lat1,long1,lat2,long2)=>{
     const toRad = deg => (deg * Math.PI) / 180;
   const R = 6371; 
@@ -20,6 +23,33 @@ export const findDistance=(lat1,long1,lat2,long2)=>{
   return Number(distance.toFixed(2))
 }
 
-export const getlatlon=()=>{
-    
+export const getcoordinates=async(cordinates)=>{
+  const apikey=process.env.googleapikey;
+  const url=`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(cordinates)}&key=${apikey}`;
+   try{
+    const response = await axios.get(url);
+        if (response.data.status === 'OK') {
+            const location = response.data.results[ 0 ].geometry.location;
+            return {
+                lat: location.lat,
+                lon: location.lng
+            };
+        } else {
+            throw new Error('Unable to fetch coordinates');
+        }
+   }catch(err){
+    console.error(err);
+    throw(err)
+   }
 }
+function deduplicateLocations(locations) {
+  const uniqueMap = new Map();
+  for (const loc of locations) {
+    const key = loc.name.toLowerCase();
+    if (!uniqueMap.has(key)) {
+      uniqueMap.set(key, loc);
+    }
+  }
+  return Array.from(uniqueMap.values());
+}
+export {deduplicateLocations}
